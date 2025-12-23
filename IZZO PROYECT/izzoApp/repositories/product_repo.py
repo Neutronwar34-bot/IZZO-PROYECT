@@ -23,17 +23,15 @@ class ProductRepository:
     def create(data: dict):
         product = Product(**data)
         db.session.add(product)
-        db.session.commit()
         return product
 
     @staticmethod
     def update(product: Product, data: dict):
         for key, value in data.items():
             setattr(product, key, value)
-        db.session.commit()
         return product
 
     @staticmethod
     def deactivate(product: Product):
         product.is_active = False
-        db.session.commit()
+        return product

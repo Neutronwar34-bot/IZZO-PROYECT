@@ -1,4 +1,4 @@
-from app.utils.db import db
+from izzoApp.utils.db import db
 from datetime import datetime
 
 class Product(db.Model):
@@ -18,6 +18,13 @@ class Product(db.Model):
 
     category = db.relationship("Category", back_populates="products")
     brand = db.relationship("Brand", back_populates="products")
+
+    stocks = db.relationship(
+    "Stock",
+    back_populates="product",
+    cascade="all, delete-orphan"
+    )
+
 
     def __repr__(self):
         return f"<Product {self.sku} - {self.name}>"

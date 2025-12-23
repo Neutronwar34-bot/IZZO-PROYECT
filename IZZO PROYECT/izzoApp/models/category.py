@@ -1,4 +1,4 @@
-from app.utils.db import db
+from izzoApp.utils.db import db
 
 class Category(db.Model):
     __tablename__ = "categories"

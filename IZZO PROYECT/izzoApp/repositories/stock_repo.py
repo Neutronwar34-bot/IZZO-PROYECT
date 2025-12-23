@@ -11,18 +11,19 @@ class StockRepository:
         ).first()
 
     @staticmethod
-    def create(product_id, location_id, quantity=0):
-        stock = Stock(
-            product_id=product_id,
-            location_id=location_id,
-            quantity=quantity
-        )
-        db.session.add(stock)
-        db.session.commit()
+    def get_or_create(product_id, location_id):
+        stock = StockRepository.get(product_id, location_id)
+        if not stock:
+            stock = Stock(
+                product_id=product_id,
+                location_id=location_id,
+                quantity=0
+            )
+            db.session.add(stock)
+            db.session.flush()  # obtiene id sin commit
         return stock
 
     @staticmethod
-    def update(stock, quantity):
+    def set_quantity(stock, quantity):
         stock.quantity = quantity
-        db.session.commit()
-        return stock
+        db.session.add(stock)
